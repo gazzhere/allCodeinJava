@@ -1,6 +1,6 @@
 package Trie;
 
-public class startsWith {
+public class uniqueSubstring {
     static class Node{
         Node children[]=new Node[26];
         boolean eow=false;
@@ -36,25 +36,26 @@ public class startsWith {
         }
        return curr.eow==true;
     }
-    public static boolean startsWith(String prefix){
-        Node curr=root;
-        for(int i=0;i<prefix.length();i++){
-            int index=prefix.charAt(i)-'a';
-            if(curr.children[index]==null){
-                return false;
+    public static int countNodes(Node root){
+        if(root==null){
+            return 0;
+        }
+        int count=0;
+        for(int i=0;i<26;i++){
+            if(root.children[i]!=null){
+                count+=countNodes(root.children[i]);
             }
-            curr=curr.children[index];
         }
-        return true;
+        return count+1;
     }
-
     public static void main(String[] args) {
-        String[] word={"zebra","dog","dove","duck"}; 
-        for(int i=0;i<word.length;i++){
-         insert(word[i]);
+        String str="apple";
+        for(int i=0;i<str.length();i++){
+            String suffix=str.substring(i);
+            insert(suffix);
         }
-        String pref="zsseb";
-        System.out.println(startsWith(pref));
+       System.out.println(countNodes(root));
     }
+    
     
 }

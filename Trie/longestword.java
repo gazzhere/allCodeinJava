@@ -1,6 +1,7 @@
 package Trie;
 
-public class startsWith {
+public class longestword {
+    
     static class Node{
         Node children[]=new Node[26];
         boolean eow=false;
@@ -36,25 +37,30 @@ public class startsWith {
         }
        return curr.eow==true;
     }
-    public static boolean startsWith(String prefix){
-        Node curr=root;
-        for(int i=0;i<prefix.length();i++){
-            int index=prefix.charAt(i)-'a';
-            if(curr.children[index]==null){
-                return false;
+    public static String ans="";
+    public static void longestWord(Node root,StringBuilder temp){
+       if(root==null){
+        return;
+       } 
+       for(int i=25;i>=0;i--){
+        if(root.children[i]!=null && root.children[i].eow==true){
+            char ch=(char)(i+'a');
+            temp.append(ch);
+            if(temp.length()>ans.length()){
+                ans=temp.toString();
             }
-            curr=curr.children[index];
+            longestWord(root.children[i], temp);
+            temp.deleteCharAt(temp.length()-1);
         }
-        return true;
+       }
     }
-
     public static void main(String[] args) {
-        String[] word={"zebra","dog","dove","duck"}; 
+        String[] word={"a","banana","app","appl","ap","apply","apple"}; 
         for(int i=0;i<word.length;i++){
          insert(word[i]);
         }
-        String pref="zsseb";
-        System.out.println(startsWith(pref));
+        longestWord(root, new StringBuilder(""));
+        System.out.println(ans);
     }
     
 }

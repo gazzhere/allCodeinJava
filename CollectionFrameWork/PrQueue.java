@@ -6,22 +6,27 @@ import java.util.PriorityQueue;
 
 public class PrQueue {
     public static void main(String[] args) {
-        PriorityQueue<Integer> pq=new PriorityQueue<>();
-        pq.offer(48);
-        pq.offer(78);
-        pq.offer(1);
-        pq.offer(56);
-        pq.offer(90);
-        pq.offer(8);
-
-        // List<Integer> lst=new ArrayList<>();
-        // int index=0;
-        // while(!pq.isEmpty()){
-        //     if(index==2)break;
-        //     lst.add(pq.poll());
-        //     index++;
-        // }
-        // System.out.println(lst);
-        System.out.println(pq);
-    }
+        List<StudentsMarks> stmarks=new ArrayList<>();
+        stmarks.add(new StudentsMarks(48,4));
+        stmarks.add(new StudentsMarks(47,7));
+        stmarks.add(new StudentsMarks(5,80));
+        stmarks.add(new StudentsMarks(44,43)); 
+        stmarks.add(new StudentsMarks(48,45));
+        PriorityQueue<StudentsMarks> spq=new PriorityQueue<>((a,b)->{
+            System.out.println("comperator is called");
+          return  b.getPhysics()-a.getPhysics();
+        });
+        for(StudentsMarks x:stmarks){
+            spq.add(x);
+        }
+        List<StudentsMarks> top=new ArrayList<>();
+        while(!spq.isEmpty()){ 
+            top.add(spq.poll());
+        }
+        
+        System.out.println(top);
+       
+        
+       
+    } 
 }

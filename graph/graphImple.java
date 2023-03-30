@@ -136,7 +136,7 @@ public class graphImple {
             }
         }
         while(!s.empty()){
-            System.out.println(s.pop()+" ");
+            System.out.print(s.pop()+" ");
         }
     }
     public static void topoSortUtil(ArrayList<Edges>[] graph,int curr,boolean vis[],Stack<Integer>s){
@@ -150,6 +150,38 @@ public class graphImple {
          s.push(curr);
     }
 
+    public static void calacIndegre(ArrayList<Edges>[] graph,int indeg[]){
+        for(int i=0;i<graph.length;i++){
+            int v=i;
+            for(int j=0;j<graph[v].size();j++){
+                Edges e=graph[v].get(j);
+                indeg[e.dest]++;
+            }
+        }
+    }
+    public static void topoSortKhansAlgo(ArrayList<Edges>[] graph){
+        int indeg[]=new int[graph.length];
+        calacIndegre(graph, indeg);
+        Queue<Integer> q=new LinkedList<>();
+        for(int i=0;i<indeg.length;i++){
+            if(indeg[i]==0){
+                q.add(i); 
+            }
+        }
+        while(!q.isEmpty()){
+            int curr=q.remove();
+            System.out.print(curr+" ");
+            for(int i=0;i<graph[curr].size();i++){
+                Edges e=graph[curr].get(i);
+                indeg[e.dest]--;
+                if(indeg[e.dest]==0){
+                    q.add(e.dest);
+                }
+            }
+        }
+        System.out.println();
+    }
+
 
     public static void main(String[] args) {
         int V = 6;
@@ -158,7 +190,8 @@ public class graphImple {
         createGraph(graph);
         // dfs(graph,0,new boolean[V]);
         // System.out.println(isCycle (graph));
-        topologicalSort(graph);
+        // topologicalSort(graph); 
+        topoSortKhansAlgo(graph);
 
     }
 }
